@@ -7,7 +7,10 @@
 <body>
 	<%@ include file="Header.jsp"%>
 	<div align="center">
-		<h1>Welcome to My Website</h1>
-		<%@ include file="Footer.jsp"%>
+		<h1>
+			Welcome to my web-site<%=user != null ? "(" + user.getFirstName() + ")" : ""%>
+		</h1>
+	</div>
+	<%@ include file="Footer.jsp"%>
 </body>
 </html>

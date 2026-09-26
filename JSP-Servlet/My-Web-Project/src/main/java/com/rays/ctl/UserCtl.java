@@ -12,13 +12,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-@WebServlet("/UserRegistrationCtl")
-public class UserRegistrationCtl extends HttpServlet {
+@WebServlet("/UserCtl")
+public class UserCtl extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("UserRegistrationView.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("UserView.jsp");
 		rd.forward(request, response);
 	}
 
@@ -34,18 +33,22 @@ public class UserRegistrationCtl extends HttpServlet {
 		String loginId = request.getParameter("loginId");
 		String password = request.getParameter("password");
 		String dob = request.getParameter("dob");
+
 		try {
 			bean.setFirstName(firstName);
 			bean.setLastName(lastName);
 			bean.setLoginId(loginId);
 			bean.setPassword(password);
 			bean.setDob(sdf.parse(dob));
+
 			model.add(bean);
-			request.setAttribute("succMsg", "user registered successfully ");
-		}catch(Exception e) {
+			request.setAttribute("succMsg", "user saved successully");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("UserRegistrationView.jsp");
+
+		RequestDispatcher rd = request.getRequestDispatcher("UserView.jsp");
 		rd.forward(request, response);
 	}
+
 }

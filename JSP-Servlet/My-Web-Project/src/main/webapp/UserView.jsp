@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +15,7 @@
 		<h2 style="color: green">
 			<%=succMsg != null ? succMsg : ""%></h2>
 	</div>
-	<form action="UserRegistrationCtl" method="post">
+	<form action="UserCtl" method="post">
 		<div align="center">
 			<table>
 				<tr>
@@ -46,7 +45,7 @@
 				</tr>
 				<tr>
 					<th></th>
-					<td><input type="submit" name="operation" value="signUp"></td>
+					<td><input type="submit" name="operation" value="save"></td>
 				</tr>
 			</table>
 		</div>

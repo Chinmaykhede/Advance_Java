@@ -22,7 +22,7 @@ public class WelcomeCtl extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("LoginView.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("WelcomeView.jsp");
 		rd.forward(request, response);
 	}
 }
