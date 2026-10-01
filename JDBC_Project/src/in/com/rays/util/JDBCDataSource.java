@@ -9,7 +9,9 @@ public final class JDBCDataSource {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing","root","root");
+			//conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing","root","root");
+			
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/module","root","root");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

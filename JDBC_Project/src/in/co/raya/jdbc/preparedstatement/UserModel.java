@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import in.com.rays.util.JDBCDataSource;
 
@@ -50,8 +52,7 @@ public class UserModel {
 	public void add(UserBean bean) throws Exception {
 		Connection conn = null;
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing", "root", "root");
+			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("insert into user values(?,?,?,?,?,?)");
 
@@ -68,7 +69,7 @@ public class UserModel {
 			e.printStackTrace();
 			conn.rollback();
 		} finally {
-			conn.close();
+			JDBCDataSource.closeConnection(conn);
 		}
 
 	}
@@ -76,8 +77,7 @@ public class UserModel {
 	public void delete(UserBean bean) throws Exception {
 		Connection conn = null;
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing", "root", "root");
+			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("delete from user where userId=?");
 			pstmt.setInt(1, bean.getId());
@@ -88,15 +88,14 @@ public class UserModel {
 			e.printStackTrace();
 			conn.rollback();
 		} finally {
-			conn.close();
+			JDBCDataSource.closeConnection(conn);
 		}
 	}
 
 	public void update(UserBean bean) throws Exception {
 		Connection conn = null;
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing", "root", "root");
+			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("update user set userfirstName=? where userId=?");
 			pstmt.setString(1, bean.getFirstName());
@@ -108,7 +107,7 @@ public class UserModel {
 			e.printStackTrace();
 			conn.rollback();
 		} finally {
-			conn.close();
+			JDBCDataSource.closeConnection(conn);
 		}
 	}
 
@@ -193,6 +192,60 @@ public class UserModel {
 
 		return null;
 
+	}
+
+	public List search(UserBean bean, int pageNo, int pageSize) {
+		StringBuffer sql = new StringBuffer("select * from user where 1=1"); // where 1=1 is sql injection
+		List list = new ArrayList();
+		Connection conn = null;
+		try {
+			if (bean != null) {
+				if (bean.getId() > 0) {
+					sql.append("and Id =" + bean.getId());
+				}
+				if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
+					sql.append(" and firstName like '" + bean.getFirstName() + "%'");
+				}
+				if (bean.getLastName() != null && bean.getLastName().length() > 0) {
+					sql.append(" and lastName like '" + bean.getLastName() + "%'");
+				}
+				if (bean.getLoginId() != null && bean.getLoginId().length() > 0) {
+					sql.append(" and loginId = '" + bean.getLoginId() + "'");
+				}
+				if (bean.getPassword() != null && bean.getPassword().length() > 0) {
+					sql.append(" and password = '" + bean.getPassword() + "'");
+				}
+				if (bean.getDob() != null && bean.getDob().getTime() > 0) {
+					sql.append(" and dob = '" + new java.sql.Date(bean.getDob().getTime()) + "'");
+				}
+			}
+			if (pageSize > 0) {
+				int index = (pageNo - 1) * pageSize;
+				sql.append(" limit " + index + ", " + pageSize);
+			}
+
+			System.out.println("sql ====> " + sql.toString());
+			conn = JDBCDataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				bean = new UserBean();
+				bean.setId(rs.getInt("id"));
+				bean.setFirstName(rs.getString("firstName"));
+				bean.setLastName(rs.getString("lastName"));
+				bean.setLoginId(rs.getString("loginId"));
+				bean.setPassword(rs.getString("password"));
+				bean.setDob(rs.getDate("dob"));
+				list.add(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCDataSource.closeConnection(conn);
+		}
+
+		return list;
 	}
 
 }

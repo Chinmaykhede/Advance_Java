@@ -10,8 +10,8 @@ public class RoomModel {
 
 	public static void main(String[] args) throws Exception {
 
-		//Serch();
-		add();
+		//Search();
+		//add();
 		//delete();
 	}
 	
@@ -27,15 +27,10 @@ public class RoomModel {
 		int i = stmt.executeUpdate("insert into hotel values(45 , 'rajvir' , 'indore' , 4 , '908764677')");
 		
 		System.out.println(i+"Row affected");
-		
-		
-	
-		
-		// TODO Auto-generated method stub
-		
+			
 	}
 
-	private static void Serch() throws ClassNotFoundException, SQLException  {
+	private static void Search() throws ClassNotFoundException, SQLException  {
 
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing", "root", "root");
@@ -46,6 +41,7 @@ public class RoomModel {
 		while(rs.next()) {
 			System.out.println(rs.getLong("hotelId"));
 			System.out.println(rs.getString("hotelName"));
+			System.out.println("-------------------------------------");
 			
 		}
 		

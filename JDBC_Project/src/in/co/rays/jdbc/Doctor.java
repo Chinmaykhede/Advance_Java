@@ -10,7 +10,7 @@ public class Doctor {
 	public static void main(String[] args) throws Exception, SQLException {
 		// create();
 		// search();
-		insert();
+		//insert();
 		// update();
 		// delete();
 	}

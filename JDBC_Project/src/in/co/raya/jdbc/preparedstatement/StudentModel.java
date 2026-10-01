@@ -2,15 +2,17 @@ package in.co.raya.jdbc.preparedstatement;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.JDBCType;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import in.com.rays.util.JDBCDataSource;
 
 public class StudentModel {
 	public void add(int id, String name, int age, int mark, String email) throws Exception {
 		Connection conn = null;
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing", "root", "root");
+			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("insert into student values(?,?,?,?,?)");
 			pstmt.setInt(1, id);
@@ -25,7 +27,7 @@ public class StudentModel {
 			e.printStackTrace();
 			conn.rollback();
 		} finally {
-			conn.close();
+			JDBCDataSource.closeConnection(conn);
 		}
 
 	}
@@ -33,8 +35,7 @@ public class StudentModel {
 	public void delete(int id) throws Exception {
 		Connection conn = null;
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing", "root", "root");
+			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("delete from student where id=?");
 			pstmt.setInt(1, id);
@@ -45,15 +46,14 @@ public class StudentModel {
 			e.printStackTrace();
 			conn.rollback();
 		} finally {
-			conn.close();
+			JDBCDataSource.closeConnection(conn);
 		}
 	}
 
 	public void update(int id, String email) throws Exception {
 		Connection conn = null;
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing", "root", "root");
+			conn=JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn
 					.prepareStatement("update student set email=? where id = ?");
@@ -66,7 +66,7 @@ public class StudentModel {
 			e.printStackTrace();
 			conn.rollback();
 		} finally {
-			conn.close();
+			JDBCDataSource.closeConnection(conn);
 		}
 	}
 
