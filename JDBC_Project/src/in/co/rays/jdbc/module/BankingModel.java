@@ -94,60 +94,60 @@ public class BankingModel {
 		}
 	}
 
-	public List search(BankingBean bean, int pageNo, int pageSize) {
-		StringBuffer sql = new StringBuffer("select * from user where 1=1"); 
-		List list = new ArrayList();
-		Connection conn = null;
-		try {
-			if (bean != null) {
-				if (bean.getId() > 0) {
-					sql.append("and Id =" + bean.getId());
-				}
-				if (bean.getAccountNo() != null && bean.getAccountNo().length() > 0) {
-					sql.append(" and AccountNo like '" + bean.getAccountNo() + "%'");
-				}
-				if (bean.getHolderName() != null && bean.getHolderName().length() > 0) {
-					sql.append(" and holderName like '" + bean.getHolderName() + "%'");
-				}
-				if (bean.getAccountType() != null && bean.getAccountType().length() > 0) {
-					sql.append(" and accountType  = '" + bean.getAccountType() + "'");
-				}
-				if (bean.getBalance() != null && bean.getBalance().length()> 0) {
-					sql.append(" and balance = '" + bean.getBalance() + "'");
-					
-				if(bean.getBranch() != null && bean.getBranch().length()>0) {
-					sql.append(" and branch like '" + bean.getBranch() + "%'");
-				}
-				
-			}
-			if (pageSize > 0) {
-				int index = (pageNo - 1) * pageSize;
-				sql.append(" limit " + index + ", " + pageSize);
-			}
+//	public List search(BankingBean bean, int pageNo, int pageSize) {
+//		StringBuffer sql = new StringBuffer("select * from user where 1=1"); 
+//		List list = new ArrayList();
+//		Connection conn = null;
+//		try {
+//			if (bean != null) {
+//				if (bean.getId() > 0) {
+//					sql.append("and Id =" + bean.getId());
+//				}
+//				if (bean.getAccountNo() != null && bean.getAccountNo().length() > 0) {
+//					sql.append(" and AccountNo like '" + bean.getAccountNo() + "%'");
+//				}
+//				if (bean.getHolderName() != null && bean.getHolderName().length() > 0) {
+//					sql.append(" and holderName like '" + bean.getHolderName() + "%'");
+//				}
+//				if (bean.getAccountType() != null && bean.getAccountType().length() > 0) {
+//					sql.append(" and accountType  = '" + bean.getAccountType() + "'");
+//				}
+//				if (bean.getBalance() != null && bean.getBalance().length()> 0) {
+//					sql.append(" and balance = '" + bean.getBalance() + "'");
+//					
+//				if(bean.getBranch() != null && bean.getBranch().length()>0) {
+//					sql.append(" and branch like '" + bean.getBranch() + "%'");
+//				}
+//				
+//			}
+//			if (pageSize > 0) {
+//				int index = (pageNo - 1) * pageSize;
+//				sql.append(" limit " + index + ", " + pageSize);
+//			}
+//
+//			System.out.println("sql ====> " + sql.toString());
+//			conn = JDBCDataSource.getConnection();
+//			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+//
+//			ResultSet rs = pstmt.executeQuery();
+//			while (rs.next()) {
+//				bean = new BankingBean();
+//				bean.setId(rs.getInt("id"));
+//				bean.setAccountNo(rs.getLong("accountNo"));
+//				bean.setHolderName(rs.getString("holderName"));
+//				bean.setAccountType(rs.getString("accountType"));
+//				bean.setBalance(rs.getDouble("balance"));
+//				bean.setBranch(rs.getString("branch"));
+//				list.add(bean);
+//			}
+//			}catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			JDBCDataSource.closeConnection(conn);
+//		}
 
-			System.out.println("sql ====> " + sql.toString());
-			conn = JDBCDataSource.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				bean = new BankingBean();
-				bean.setId(rs.getInt("id"));
-				bean.setAccountNo(rs.getLong("accountNo"));
-				bean.setHolderName(rs.getString("holderName"));
-				bean.setAccountType(rs.get);
-				bean.setPassword(rs.getString("password"));
-				bean.setDob(rs.getDate("dob"));
-				list.add(bean);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			JDBCDataSource.closeConnection(conn);
-		}
-
-		return list;
+//		return list;
 	}
 
-}
-}
+
+
